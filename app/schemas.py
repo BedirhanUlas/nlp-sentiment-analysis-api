@@ -3,18 +3,28 @@ from typing import List
 
 
 class PredictRequest(BaseModel):
-    text: str = Field(..., min_length=1, max_length=512, example="This movie was absolutely amazing!")
+    text: str = Field(
+        ...,
+        min_length=1,
+        max_length=512,
+        examples=["This movie was absolutely amazing!"],
+    )
 
 
 class BatchPredictRequest(BaseModel):
-    texts: List[str] = Field(..., min_items=1, max_items=32, example=["Great product!", "Terrible experience."])
+    texts: List[str] = Field(
+        ...,
+        min_length=1,
+        max_length=32,
+        examples=[["Great product!", "Terrible experience."]],
+    )
 
 
 class SentimentResult(BaseModel):
     text: str
-    label: str
-    score: float
-    sentiment: str
+    label: str          # POSITIVE or NEGATIVE
+    score: float        # confidence 0.0 - 1.0
+    sentiment: str      # human-friendly: "Positive" / "Negative"
 
 
 class BatchSentimentResponse(BaseModel):
